@@ -3,11 +3,17 @@ from dotenv import load_dotenv
 from kiteconnect import KiteConnect
 import pandas as pd
 from datetime import datetime
+import sys
+from pathlib import Path
+
+# Add parent directories to path for imports
+sys.path.append(str(Path(__file__).parent.parent.parent))
+
 from auth.token_manager import load_access_token
 from utils.instruments import download_instruments_csv, get_banknifty_weekly_fut_token
 from utils.data_fetch import fetch_5min_data
-# Import the updated strategy functions
-from strategy.core.ub_lb import run_floating_band_strategy, save_strategy_report
+# Import the original strategy functions
+from src.strategies.core.original import run_floating_band_strategy, save_strategy_report
 
 load_dotenv()
 
@@ -161,7 +167,7 @@ def display_strategy_preview(df):
     print("-" * 80)
 
 def main():
-    print("🚀 Starting Floating Band UB/LB Strategy")
+    print("🚀 Starting Original Floating Band UB/LB Strategy")
     print("=" * 60)
     
     # Load environment variables
@@ -207,8 +213,8 @@ def main():
         # Display strategy preview
         display_strategy_preview(df)
 
-        # Run the floating band strategy
-        print(f"\n🔄 Executing Updated Floating Band Strategy on {len(df)} candles...")
+        # Run the original floating band strategy
+        print(f"\n🔄 Executing Original Floating Band Strategy on {len(df)} candles...")
         print("   Following Excel column order: Time | Volume | Range | High | Low | UB | LB | Signal")
         print("-" * 60)
         
